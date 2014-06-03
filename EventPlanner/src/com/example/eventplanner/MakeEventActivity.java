@@ -1,22 +1,38 @@
 package com.example.eventplanner;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
+import android.util.DisplayMetrics;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.Projection; //projections are used to get points on screen
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory; //used to make custom marker images
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MakeEventActivity extends FragmentActivity {
+public class MakeEventActivity extends FragmentActivity implements OnMarkerClickListener {
 
 	private GoogleMap googleMap;
+	Projection projection;
+	DisplayMetrics metrics;
+	
+	static int screen_height;
+	static int screen_width;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +99,19 @@ public class MakeEventActivity extends FragmentActivity {
                         "Sorry! unable to create maps", Toast.LENGTH_SHORT)
                         .show();
             }
+            else
+            {
+            	projection = googleMap.getProjection();
+    			googleMap.setPadding(0, 0, 0, 100);
+    			getFragmentManager().findFragmentById(R.id.map).setRetainInstance(true);
+            }
+            
+    		//googleMap.setOnMarkerClickListener(googleMap);
+    		
+    		metrics = new DisplayMetrics();
+    		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    		screen_width = metrics.widthPixels;
+    		screen_height = metrics.heightPixels;
         }
     }
  
@@ -91,5 +120,46 @@ public class MakeEventActivity extends FragmentActivity {
         super.onResume();
         initilizeMap();
     }	
+    
+    public void clickPlaceEvent(View v){
+		projection = googleMap.getProjection();
+		LatLng tempLoc = projection.fromScreenLocation(new Point((int) (screen_width / 2), (int) (screen_height/2)));
+		/*SharedPreferences settings = getSharedPreferences(MYPREFS, 0);
+		SharedPreferences.Editor editor = settings.edit();
+	    editor.putString(CreateEvent.PREF_LAT, Double.toString(tempLoc.latitude));
+	    editor.putString(CreateEvent.PREF_LONG, Double.toString(tempLoc.longitude));
+	    editor.commit();
+
+		Intent intent = new Intent(this, CreateEvent.class);
+		startActivity(intent);*/
+		eventMarker temp = new eventMarker();
+		temp.Loc = tempLoc;
+		EditText tempText = (EditText)findViewById(R.id.editText1);
+		temp.Title = tempText.getText().toString();
+		Marker tempMarker = googleMap.addMarker(new MarkerOptions()
+		.position(temp.Loc)
+		.title(temp.Title)
+		/*.snippet("Kiel is cool")
+		.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher))*/);
+		tempText.setText("New Event Title");
+	}
+    
+	public void onClickTitleEditText(View v)
+	{
+		EditText tempText = (EditText)findViewById(R.id.editText1);
+		tempText.getText().clear();
+	}
+
+	@Override
+	public boolean onMarkerClick(Marker arg0) {
+		//go to new activity that allows viewing/rsvping/event editing
+		return false;
+	}
+    
+	/*@Override
+	public boolean onMarkerClick(Marker arg0) {
+		//go to new activity that allows viewing/rsvping/event editing
+		return false;
+	}*/
 
 }

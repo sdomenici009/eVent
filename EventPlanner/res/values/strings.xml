@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="create_event">Create Event</string>
     <string name="title_activity_make_event">MakeEventActivity</string>
+    <string name="makeEventButtonText">Make Event</string>
+    <string name="newEventTitleEditText">New Event Title</string>
 
 </resources>
