@@ -2,6 +2,7 @@ package com.example.eventplanner;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
-public class MakeEventActivity extends ActionBarActivity {
+public class MakeEventActivity extends FragmentActivity {
 
 	private GoogleMap googleMap;
 	
