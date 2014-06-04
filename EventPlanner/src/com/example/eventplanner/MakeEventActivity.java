@@ -1,10 +1,13 @@
 package com.example.eventplanner;
 
+import android.content.Context;
 import android.graphics.Point;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,17 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.util.DisplayMetrics;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.Projection; //projections are used to get points on screen
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory; //used to make custom marker images
+import com.google.android.gms.maps.Projection; //projections are used to get points on screen
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+//used to make custom marker images
 
 public class MakeEventActivity extends FragmentActivity implements OnMarkerClickListener {
 
@@ -34,11 +36,16 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 	static int screen_height;
 	static int screen_width;
 	
+	private LocationManager locationManager;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_make_event);
 		
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);		
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
         try {
             // Loading map
             initilizeMap();
@@ -47,6 +54,29 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
             e.printStackTrace();
         }
 	}
+	
+	// Define a listener that responds to location updates
+	LocationListener networkLocationListener = new LocationListener() {
+	    public void onLocationChanged(Location location) {
+	      // Calls your function that uses the location.
+	    	if (googleMap != null){
+		        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+		    	locationManager.removeUpdates(this);
+	    	}
+	    }
+
+	    public void onStatusChanged(String provider, int status, Bundle extras) {}
+	    public void onProviderEnabled(String provider) {}
+	    public void onProviderDisabled(String provider) {}
+	  };
+	  
+	// Define a listener that responds to location updates
+	LocationListener gpsLocationListener = new LocationListener() {
+	    public void onLocationChanged(Location location) {}
+	    public void onStatusChanged(String provider, int status, Bundle extras) {}
+	    public void onProviderEnabled(String provider) {}
+	    public void onProviderDisabled(String provider) {}
+	  };
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,6 +133,7 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
             {
             	projection = googleMap.getProjection();
     			googleMap.setPadding(0, 0, 0, 100);
+    			googleMap.setMyLocationEnabled(true);
     			getFragmentManager().findFragmentById(R.id.map).setRetainInstance(true);
             }
             
@@ -120,6 +151,12 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
         super.onResume();
         initilizeMap();
     }	
+    
+    @Override
+    protected void onDestroy(){
+    	super.onDestroy();
+    	locationManager.removeUpdates(gpsLocationListener);
+    }
     
     public void clickPlaceEvent(View v){
 		projection = googleMap.getProjection();
