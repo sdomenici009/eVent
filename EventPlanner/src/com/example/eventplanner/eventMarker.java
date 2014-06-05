@@ -20,6 +20,9 @@ public class eventMarker {
 	public Date EventTime;
 	public String Description;
 	public int numRSVPs;
+	public int neededRSVPs;
+	public String date;
+	public String time;
 	
 	public static eventMarker getInstance(Context context) {
 		if(instance == null) {
@@ -29,6 +32,9 @@ public class eventMarker {
 			instance.Loc = new LatLng(0,0);
 			instance.EventTime = new Date();
 			instance.numRSVPs = 0;
+			instance.neededRSVPs = 0;
+			instance.date = "";
+			instance.time = "";
 		}
 		return instance;
 	}	

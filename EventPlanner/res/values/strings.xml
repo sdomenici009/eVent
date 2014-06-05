@@ -8,5 +8,12 @@
     <string name="title_activity_make_event">MakeEventActivity</string>
     <string name="makeEventButtonText">Make Event</string>
     <string name="newEventTitleEditText">New Event Title</string>
+    <string name="title_activity_event_details">EventDetails</string>
+    <string name="description">Description:</string>
+    <string name="needed">People Needed:</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="cancel">Cancel</string>
+    <string name="event_name">Event Name</string>
 
 </resources>

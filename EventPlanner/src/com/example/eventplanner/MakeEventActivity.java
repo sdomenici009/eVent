@@ -1,6 +1,9 @@
 package com.example.eventplanner;
 
+import java.util.ArrayList;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
@@ -29,6 +32,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MakeEventActivity extends FragmentActivity implements OnMarkerClickListener {
 
+	eventMarker temp;
+	
+	ArrayList<Marker> markers;
+	
 	private GoogleMap googleMap;
 	Projection projection;
 	DisplayMetrics metrics;
@@ -43,6 +50,7 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_make_event);
 		
+		markers = new ArrayList<Marker>();
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);		
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
@@ -150,6 +158,9 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
     protected void onResume() {
         super.onResume();
         initilizeMap();
+        temp = eventMarker.getInstance(this);
+        if(temp.Title == "cancel")
+        	markers.get(markers.size() - 1).remove();
     }	
     
     @Override
@@ -169,16 +180,18 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 
 		Intent intent = new Intent(this, CreateEvent.class);
 		startActivity(intent);*/
-		eventMarker temp = new eventMarker();
+		temp = eventMarker.getInstance(this);
 		temp.Loc = tempLoc;
 		EditText tempText = (EditText)findViewById(R.id.editText1);
 		temp.Title = tempText.getText().toString();
-		Marker tempMarker = googleMap.addMarker(new MarkerOptions()
-		.position(temp.Loc)
-		.title(temp.Title)
+		Marker tempMarker = googleMap.addMarker(new MarkerOptions().position(temp.Loc).title(temp.Title));
+		markers.add(tempMarker);
 		/*.snippet("Kiel is cool")
-		.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher))*/);
+		.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));*/
 		tempText.setText("New Event Title");
+		
+		Intent intent = new Intent(this, EventDetails.class);
+		startActivity(intent);
 	}
     
 	public void onClickTitleEditText(View v)
@@ -192,11 +205,5 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 		//go to new activity that allows viewing/rsvping/event editing
 		return false;
 	}
-    
-	/*@Override
-	public boolean onMarkerClick(Marker arg0) {
-		//go to new activity that allows viewing/rsvping/event editing
-		return false;
-	}*/
 
 }
