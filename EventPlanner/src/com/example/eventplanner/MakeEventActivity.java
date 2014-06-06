@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MakeEventActivity extends FragmentActivity implements OnMarkerClickListener {
 
 	eventMarker temp;
+	ArrayOfEvents events;
 	
 	ArrayList<Marker> markers;
 	
@@ -44,6 +46,8 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 	static int screen_width;
 	
 	private LocationManager locationManager;
+	
+	private static final String LOG_TAG = "Make Event Activity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -157,16 +161,19 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
     @Override
     protected void onResume() {
         super.onResume();
+    	events = ArrayOfEvents.getInstance(this);
+    	Log.i(LOG_TAG, events.toString());
         initilizeMap();
         temp = eventMarker.getInstance(this);
         if(temp.Title == "cancel")
         	markers.get(markers.size() - 1).remove();
+        	temp.Title = "";
     }	
     
     @Override
     protected void onDestroy(){
-    	super.onDestroy();
     	locationManager.removeUpdates(gpsLocationListener);
+    	super.onDestroy();
     }
     
     public void clickPlaceEvent(View v){

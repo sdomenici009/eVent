@@ -1,9 +1,9 @@
 package com.example.eventplanner;
-import java.util.Date;
-
-import com.google.android.gms.maps.model.LatLng;
+import java.util.Calendar;
 
 import android.content.Context;
+
+import com.google.android.gms.maps.model.LatLng;
 
 
 public class eventMarker {
@@ -17,26 +17,26 @@ public class eventMarker {
 	// Here are some values we want to keep global.
 	public LatLng Loc;
 	public String Title;
-	public Date EventTime;
 	public String Description;
-	public int numRSVPs;
-	public int neededRSVPs;
-	public String date;
-	public String time;
-	
+	public Calendar deadline;
 	public static eventMarker getInstance(Context context) {
 		if(instance == null) {
 			instance = new eventMarker();
 			instance.Title = "";
 			instance.Description = "";
 			instance.Loc = new LatLng(0,0);
-			instance.EventTime = new Date();
-			instance.numRSVPs = 0;
-			instance.neededRSVPs = 0;
-			instance.date = "";
-			instance.time = "";
+			instance.deadline = Calendar.getInstance();
 		}
 		return instance;
 	}	
+	
+	public eventMarker copy(){
+		eventMarker t = new eventMarker();
+		t.Title = this.Title;
+		t.Description = this.Description;
+		t.Loc = this.Loc;
+		t.deadline = this.deadline;
+		return t;
+	}
 	
 }

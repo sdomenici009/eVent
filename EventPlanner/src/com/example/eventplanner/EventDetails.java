@@ -3,17 +3,25 @@ package com.example.eventplanner;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class EventDetails extends ActionBarActivity {
 
+	private static final String LOG_TAG = "Event Details Activity";
+
 	eventMarker temp;
+	ArrayOfEvents events;
+	Spinner mspin;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +39,11 @@ public class EventDetails extends ActionBarActivity {
 	@Override
 	protected void onResume(){
 		super.onResume();
+		events = ArrayOfEvents.getInstance(this);
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(temp.Title);
+		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
+		dp.setMinDate(System.currentTimeMillis() - 1000);
 	}
 
 	@Override
@@ -75,14 +86,12 @@ public class EventDetails extends ActionBarActivity {
 	public void makeEvent(View V){
 		EditText et = (EditText) findViewById(R.id.editText1);
 		temp.Description = et.getText().toString();
-		et = (EditText) findViewById(R.id.editText2);
-		temp.neededRSVPs = Integer.parseInt(et.getText().toString());
-		et = (EditText) findViewById(R.id.editText3);
-		temp.date = et.getText().toString();
-		et = (EditText) findViewById(R.id.editText4);
-		temp.time = et.getText().toString();
-		
-		//Now we need to send temp to server
+		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
+		Log.i(LOG_TAG, Integer.toString(dp.getYear()));
+		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
+		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
+		Log.i(LOG_TAG, temp.deadline.toString());		
+		events.eventsArray.add(temp.copy());
 	}
 	
 	public void cancel(View V){

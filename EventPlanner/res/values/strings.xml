@@ -15,5 +15,12 @@
     <string name="time">Time:</string>
     <string name="cancel">Cancel</string>
     <string name="event_name">Event Name</string>
+    <string name="task">Task</string>
+    <string name="deadline">Time Until Deadline</string>
+    <string name="days">"Days: "</string>
+    <string name="date1">Date</string>
+    <string name="time1">Time</string>
+    <string name="time2">Time</string>
+    <string name="time3">Time</string>
 
 </resources>
