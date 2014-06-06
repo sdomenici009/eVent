@@ -1,7 +1,5 @@
 package com.example.eventplanner;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -23,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.Projection; //projections are used to get points on screen
@@ -31,13 +30,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 //used to make custom marker images
 
-public class MakeEventActivity extends FragmentActivity implements OnMarkerClickListener {
+public class MakeEventActivity extends FragmentActivity implements OnMarkerClickListener, OnInfoWindowClickListener{
 
 	eventMarker temp;
 	ArrayOfEvents events;
-	
-	ArrayList<Marker> markers;
-	
+		
 	private GoogleMap googleMap;
 	Projection projection;
 	DisplayMetrics metrics;
@@ -54,7 +51,6 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_make_event);
 		
-		markers = new ArrayList<Marker>();
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);		
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
@@ -145,6 +141,8 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
             {
             	projection = googleMap.getProjection();
     			googleMap.setPadding(0, 0, 0, 100);
+    			googleMap.setOnMarkerClickListener(this);
+    			googleMap.setOnInfoWindowClickListener(this);
     			googleMap.setMyLocationEnabled(true);
     			getFragmentManager().findFragmentById(R.id.map).setRetainInstance(true);
             }
@@ -165,9 +163,9 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
     	Log.i(LOG_TAG, events.toString());
         initilizeMap();
         temp = eventMarker.getInstance(this);
-        if(temp.Title == "cancel")
-        	markers.get(markers.size() - 1).remove();
-        	temp.Title = "";
+        googleMap.clear();
+        for(int i = 0; i < events.eventsArray.size(); i++)
+    		googleMap.addMarker(new MarkerOptions().position(events.eventsArray.get(i).Loc).title(events.eventsArray.get(i).Title)).showInfoWindow();
     }	
     
     @Override
@@ -191,8 +189,6 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 		temp.Loc = tempLoc;
 		EditText tempText = (EditText)findViewById(R.id.editText1);
 		temp.Title = tempText.getText().toString();
-		Marker tempMarker = googleMap.addMarker(new MarkerOptions().position(temp.Loc).title(temp.Title));
-		markers.add(tempMarker);
 		/*.snippet("Kiel is cool")
 		.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));*/
 		tempText.setText("New Event Title");
@@ -209,8 +205,22 @@ public class MakeEventActivity extends FragmentActivity implements OnMarkerClick
 
 	@Override
 	public boolean onMarkerClick(Marker arg0) {
-		//go to new activity that allows viewing/rsvping/event editing
 		return false;
 	}
+	
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+    	for(int i = 0; i < events.eventsArray.size(); i++){
+    		if(events.eventsArray.get(i).Loc.equals(marker.getPosition()) && events.eventsArray.get(i).Title.equals(marker.getTitle())){
+    			temp.Title = events.eventsArray.get(i).Title;
+    			temp.Description = events.eventsArray.get(i).Description;
+    			temp.Loc = events.eventsArray.get(i).Loc;
+    			temp.deadline = events.eventsArray.get(i).deadline;
+    			break;
+    		}
+    	}
+    	Intent intent = new Intent(this, ViewTaskActivity.class);
+    	startActivity(intent);
+    }
 
 }

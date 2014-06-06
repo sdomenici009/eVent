@@ -22,5 +22,13 @@
     <string name="time1">Time</string>
     <string name="time2">Time</string>
     <string name="time3">Time</string>
+    <string name="title_activity_view_task">ViewTaskActivity</string>
+    <string name="task1">Task</string>
+    <string name="date2">Date</string>
+    <string name="edit">Edit</string>
+    <string name="back">Back</string>
+    <string name="deadline1">Deadline:</string>
+    <string name="edit1">Edit</string>
+    <string name="delete">Delete</string>
 
 </resources>

@@ -3,54 +3,49 @@ package com.example.eventplanner;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-public class EventDetails extends ActionBarActivity {
-
-	private static final String LOG_TAG = "Event Details Activity";
+public class ViewTaskActivity extends ActionBarActivity {
 
 	eventMarker temp;
 	ArrayOfEvents events;
-	Spinner mspin;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_event_details);
+		setContentView(R.layout.activity_view_task);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
-		temp = eventMarker.getInstance(this);
 	}
-	
+
 	@Override
 	protected void onResume(){
 		super.onResume();
+		temp = eventMarker.getInstance(this);
 		events = ArrayOfEvents.getInstance(this);
+		
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(temp.Title);
-		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
-		dp.setMinDate(System.currentTimeMillis() - 1000);
+		tv = (TextView) findViewById(R.id.textView2);
+		tv.setText(temp.Description);
+		tv = (TextView) findViewById(R.id.textView4);
+		tv.setText(temp.deadline.getTime().toString());
+		
 	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.event_details, menu);
+		getMenuInflater().inflate(R.menu.view_task, menu);
 		return true;
 	}
 
@@ -77,26 +72,23 @@ public class EventDetails extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_event_details,
+			View rootView = inflater.inflate(R.layout.fragment_view_task,
 					container, false);
 			return rootView;
 		}
 	}
-	
-	public void makeEvent(View V){
-		EditText et = (EditText) findViewById(R.id.editText1);
-		temp.Description = et.getText().toString();
-		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
-		Log.i(LOG_TAG, Integer.toString(dp.getYear()));
-		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
-		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
-		Log.i(LOG_TAG, temp.deadline.toString());		
-		events.eventsArray.add(temp.copy());
-		onBackPressed();
-	}
-	
-	public void cancel(View V){
-		onBackPressed();
-	}
 
+	public void delete(View V){
+		for(int i = 0; i < events.eventsArray.size(); i++){
+			if(events.eventsArray.get(i).Loc.equals(temp.Loc) && events.eventsArray.get(i).Title.equals(temp.Title)){
+				events.eventsArray.remove(i);
+				break;
+			}
+		}
+		onBackPressed();
+	}
+	
+	public void edit(View V){
+		//needs to be implemented
+	}
 }
