@@ -141,7 +141,6 @@ public class MakeEventActivity extends FragmentActivity implements OnMapClickLis
             else
             {
             	projection = googleMap.getProjection();
-    			googleMap.setPadding(0, 0, 0, 100);
     			googleMap.setOnMapClickListener(this);
     			googleMap.setOnMarkerClickListener(this);
     			googleMap.setOnInfoWindowClickListener(this);
