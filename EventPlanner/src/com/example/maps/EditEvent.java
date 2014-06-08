@@ -21,20 +21,21 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-public class EventDetails extends ActionBarActivity {
+public class EditEvent extends ActionBarActivity {
 
-	private static final String LOG_TAG = "Event Details Activity";
+	private static final String LOG_TAG = "Edit Event Activity";
 
 	eventMarker temp;
 	ArrayOfEvents events;
 	Spinner mspin;
+	int index;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//Removes TitleBar from Activity
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_event_details);
+		setContentView(R.layout.activity_edit_event);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -50,8 +51,16 @@ public class EventDetails extends ActionBarActivity {
 		events = ArrayOfEvents.getInstance(this);
 		EditText tv = (EditText) findViewById(R.id.editText1);
 		tv.setText(temp.Title);
+		EditText etd = (EditText) findViewById(R.id.editText2);
+		etd.setText(temp.Description);
 		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
 		dp.setMinDate(System.currentTimeMillis() - 1000);
+		for(int i = 0; i < events.eventsArray.size(); i++){
+			if(events.eventsArray.get(i).Loc.equals(temp.Loc) && events.eventsArray.get(i).Title.equals(temp.Title)){
+				index = i;
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -91,7 +100,7 @@ public class EventDetails extends ActionBarActivity {
 		}
 	}
 	
-	public void makeEvent(View V){
+	public void saveEvent(View V){
 		EditText et1 = (EditText) findViewById(R.id.editText1);
 		temp.Title = et1.getText().toString();
 		EditText et2 = (EditText) findViewById(R.id.editText2);
@@ -100,20 +109,10 @@ public class EventDetails extends ActionBarActivity {
 		Log.i(LOG_TAG, Integer.toString(dp.getYear()));
 		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
-		Log.i(LOG_TAG, temp.deadline.toString());		
-		events.eventsArray.add(temp.copy());
-		try
-		{
-			FileOutputStream fileOut = new FileOutputStream("/com.example.maps/");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(events);
-			out.close();
-			//fileOut.close();
-		}
-		catch(IOException i)
-		{
-			i.printStackTrace();
-		}
+		Log.i(LOG_TAG, temp.deadline.toString());	
+		events.eventsArray.set(index, temp);
+		//events.eventsArray.add(temp.copy());
+
 		onBackPressed();
 	}
 	

@@ -1,5 +1,6 @@
 package com.example.maps;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -89,6 +90,9 @@ public class ViewTaskActivity extends ActionBarActivity {
 	}
 	
 	public void edit(View V){
-		//needs to be implemented
+		temp = eventMarker.getInstance(this);
+     	
+    	Intent intent = new Intent(this, EditEvent.class);
+		startActivity(intent);
 	}
 }
