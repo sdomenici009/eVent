@@ -30,5 +30,6 @@
     <string name="deadline1">Deadline:</string>
     <string name="edit1">Edit</string>
     <string name="delete">Delete</string>
+    <string name="title">Title:</string>
 
 </resources>
