@@ -1,15 +1,14 @@
 package com.example.maps;
 
-import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -18,17 +17,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.maps.DeadlineTrackerService.MyBinder;
+import com.google.gson.Gson;
 
 public class MainActivity extends ActionBarActivity {
 	private Intent serviceIntent;
 	
+	static final public String MYPREFS = "myprefs";
+	static final public String PREF_STRING_1 = "eventsList";
 	
+	private static final String LOG_TAG = "Main Activity";
+
     private boolean serviceBound;
     private DeadlineTrackerService myService;
     
@@ -39,12 +40,21 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		serviceBound = false;
+		
+		events = ArrayOfEvents.getInstance(this);
+		Gson gson = new Gson();
+		SharedPreferences settings = getSharedPreferences(MainActivity.MYPREFS, 0);
+		Editor editor = settings.edit();
+		if(settings.contains(PREF_STRING_1)){
+			events.eventsArray = gson.fromJson(settings.getString(PREF_STRING_1, ""), ArrayOfEvents.class).eventsArray;
+			Log.i(LOG_TAG, settings.getString(PREF_STRING_1, ""));
+		}
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
-		events = ArrayOfEvents.getInstance(this);
+		//events = ArrayOfEvents.getInstance(this);
 		 if(shouldBind == 1)
 	     {
 	        	bindMyService();

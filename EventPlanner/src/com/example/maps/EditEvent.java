@@ -4,6 +4,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import com.google.gson.Gson;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -112,6 +116,13 @@ public class EditEvent extends ActionBarActivity {
 		Log.i(LOG_TAG, temp.deadline.toString());	
 		events.eventsArray.set(index, temp);
 		//events.eventsArray.add(temp.copy());
+		
+		Gson gson = new Gson();
+		
+		SharedPreferences settings = getSharedPreferences(MainActivity.MYPREFS, 0);
+		Editor editor = settings.edit();
+		editor.putString(MainActivity.PREF_STRING_1, gson.toJson(events, ArrayOfEvents.class));
+		editor.commit();
 
 		onBackPressed();
 	}

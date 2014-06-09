@@ -3,8 +3,12 @@ package com.example.maps;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -76,6 +80,12 @@ public class ListEventsActivity extends ActionBarActivity{
 					String s = (String) v.getTag();
 					int pos = Integer.parseInt(s);
 					events.eventsArray.remove(pos);
+					Gson gson = new Gson();					
+					SharedPreferences settings = getSharedPreferences(MainActivity.MYPREFS, 0);
+					Editor editor = settings.edit();
+					editor.putString(MainActivity.PREF_STRING_1, gson.toJson(events, ArrayOfEvents.class));
+					editor.commit();
+					
 					aList.remove(pos);
 					aa.notifyDataSetChanged();
 				}
