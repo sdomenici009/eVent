@@ -29,5 +29,17 @@ public class ArrayOfEvents {
 		}
 		return rep;
 	}
+	
+	public void insertByDate(eventMarker newest)
+	{
+		for(int i = 0; i < this.eventsArray.size(); i++){
+			if(this.eventsArray.get(i).deadline.getTimeInMillis() > newest.deadline.getTimeInMillis())
+			{
+				this.eventsArray.add(i, newest);
+				return;
+			}
+		}
+		this.eventsArray.add(newest);
+	}
 
 }

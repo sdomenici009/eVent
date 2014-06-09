@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -25,12 +26,14 @@ import android.widget.TextView;
 import com.example.maps.DeadlineTrackerService.MyBinder;
 
 public class MainActivity extends ActionBarActivity {
+	private Intent serviceIntent;
+	
 	
     private boolean serviceBound;
     private DeadlineTrackerService myService;
     
     ArrayOfEvents events;
-
+    int shouldBind;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +45,17 @@ public class MainActivity extends ActionBarActivity {
 	protected void onResume(){
 		super.onResume();
 		events = ArrayOfEvents.getInstance(this);
+		 if(shouldBind == 1)
+	     {
+	        	bindMyService();
+	        	Button sb = (Button) findViewById(R.id.serviceButton);
+	            sb.setBackgroundColor(Color.RED);
+	     }
+		 else
+		 {
+			 Button sb = (Button) findViewById(R.id.serviceButton);
+		     sb.setBackgroundColor(Color.GREEN);
+		 }
 	}
 
 	@Override
@@ -87,32 +101,42 @@ public class MainActivity extends ActionBarActivity {
 		startActivity(intent);
     }
     
+    public void goToList(View V)
+    {
+    	//Go to the list events activity
+    	Intent intent = new Intent(this, ListEventsActivity.class);
+		startActivity(intent);
+    }
+    
+    //begin/stop the service when button is clicked
     public void startStopService(View V)
     {
     	if(!serviceBound){
-	    	DeadlineTrackerService tracker = new DeadlineTrackerService();
-	    	tracker.setEvents(events);
-	    	Intent intent = new Intent(this, DeadlineTrackerService.class);
-	        startService(intent);        
-	        bindMyService(intent);
+    		shouldBind = 1;
+    		serviceIntent = new Intent(this, DeadlineTrackerService.class);
+	        startService(serviceIntent);        
+	        bindMyService();
 	        Button sb = (Button) findViewById(R.id.serviceButton);
 	        sb.setText("Don't Notify Me");
+	        sb.setBackgroundColor(Color.RED);
     	}
     	else
     	{
+    		shouldBind = 0;
     		myService.stopProcessing();
     		stopService(new Intent(this, DeadlineTrackerService.class));
     		unbindService(serviceConnection);
     		serviceBound = false;
     		Button sb = (Button) findViewById(R.id.serviceButton);
 	        sb.setText("Notify Me");
+	        sb.setBackgroundColor(Color.GREEN);
     	}
     }
     
-    private void bindMyService(Intent intent) {
+    private void bindMyService() {
     	Log.i("LOG_TAG", "Starting the service");
     	Log.i("LOG_TAG", "Trying to bind");
-    	bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    	bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
     
     public void sendEvents()

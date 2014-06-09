@@ -66,6 +66,10 @@
             android:name="com.example.maps.EditEvent"
             android:label="@string/title_activity_edit_event" >
         </activity>
+        <activity
+            android:name="com.example.maps.ListEventsActivity"
+            android:label="@string/title_activity_list_events" >
+        </activity>
         <service
             android:name="com.example.maps.DeadlineTrackerService"
             android:exported="false"

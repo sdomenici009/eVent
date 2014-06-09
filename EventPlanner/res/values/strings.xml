@@ -24,6 +24,7 @@
     <string name="time3">Time</string>
     <string name="title_activity_view_task">ViewTaskActivity</string>
     <string name="title_activity_edit_event">Edit Event</string>
+    <string name="title_activity_list_events">Task List</string>
     <string name="task1">Task</string>
     <string name="date2">Date</string>
     <string name="edit">Edit</string>
@@ -36,5 +37,9 @@
     <string name="descriptionEditText"></string>
     <string name="titleEditText"></string>
     <string name="serviceButtontext">Notify Me</string>
+    <string name="listTitleText">Title</string>
+    <string name="deadlineText">deadline</string>
+    <string name="deleteTaskText">Complete</string>
+    <string name="listEventButtonText">View Tasks in List</string>
 
 </resources>

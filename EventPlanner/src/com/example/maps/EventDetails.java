@@ -101,7 +101,7 @@ public class EventDetails extends ActionBarActivity {
 		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
 		Log.i(LOG_TAG, temp.deadline.toString());		
-		events.eventsArray.add(temp.copy());
+		events.insertByDate(temp.copy());
 		onBackPressed();
 	}
 	
