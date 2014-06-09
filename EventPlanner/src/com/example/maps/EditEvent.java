@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 
 import com.google.gson.Gson;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -55,6 +57,7 @@ public class EditEvent extends ActionBarActivity {
 		events = ArrayOfEvents.getInstance(this);
 		EditText tv = (EditText) findViewById(R.id.editText1);
 		tv.setText(temp.Title);
+		tv.clearFocus();
 		EditText etd = (EditText) findViewById(R.id.editText2);
 		etd.setText(temp.Description);
 		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
@@ -115,7 +118,11 @@ public class EditEvent extends ActionBarActivity {
 		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
 		Log.i(LOG_TAG, temp.deadline.toString());	
 		events.eventsArray.set(index, temp);
-		//events.eventsArray.add(temp.copy());
+		
+		
+		//hides keyboard
+		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		
 		Gson gson = new Gson();
 		
@@ -128,6 +135,8 @@ public class EditEvent extends ActionBarActivity {
 	}
 	
 	public void cancel(View V){
+		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		onBackPressed();
 	}
 
