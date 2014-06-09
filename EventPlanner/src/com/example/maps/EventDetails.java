@@ -49,6 +49,7 @@ public class EventDetails extends ActionBarActivity {
 		events = ArrayOfEvents.getInstance(this);
 		EditText tv = (EditText) findViewById(R.id.editText1);
 		tv.setText("");
+		tv.clearFocus();
 		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
 		dp.setMinDate(System.currentTimeMillis() - 1000);
 	}
@@ -108,7 +109,6 @@ public class EventDetails extends ActionBarActivity {
 		Editor editor = settings.edit();
 		editor.putString(MainActivity.PREF_STRING_1, gson.toJson(events, ArrayOfEvents.class));
 		editor.commit();
-		
 		onBackPressed();
 	}
 	
