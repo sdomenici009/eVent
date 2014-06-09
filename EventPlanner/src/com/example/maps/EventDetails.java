@@ -49,7 +49,7 @@ public class EventDetails extends ActionBarActivity {
 		super.onResume();
 		events = ArrayOfEvents.getInstance(this);
 		EditText tv = (EditText) findViewById(R.id.editText1);
-		tv.setText(temp.Title);
+		tv.setText("");
 		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
 		dp.setMinDate(System.currentTimeMillis() - 1000);
 	}

@@ -37,7 +37,7 @@ public class eventMarker {
 		t.Title = this.Title;
 		t.Description = this.Description;
 		t.Loc = this.Loc;
-		t.deadline = this.deadline;
+		t.deadline = (Calendar) this.deadline.clone();
 		return t;
 	}
 	
