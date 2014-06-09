@@ -35,5 +35,6 @@
     <string name="saveChangesButtonText">Save Changes</string>
     <string name="descriptionEditText"></string>
     <string name="titleEditText"></string>
+    <string name="serviceButtontext">Notify Me</string>
 
 </resources>

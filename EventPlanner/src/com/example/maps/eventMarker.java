@@ -19,11 +19,13 @@ public class eventMarker {
 	public String Title;
 	public String Description;
 	public Calendar deadline;
+	public boolean notified;
 	public static eventMarker getInstance(Context context) {
 		if(instance == null) {
 			instance = new eventMarker();
 			instance.Title = "";
 			instance.Description = "";
+			instance.notified = false;
 			instance.Loc = new LatLng(0,0);
 			instance.deadline = Calendar.getInstance();
 		}

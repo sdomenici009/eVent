@@ -11,5 +11,15 @@
         android:layout_marginTop="62dp"
         android:text="@string/create_event" 
         android:onClick="createEvent"/>
+
+    <Button
+        android:id="@+id/serviceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create_event_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="@string/serviceButtontext" 
+        android:onClick="startStopService"/>
     
 </RelativeLayout>

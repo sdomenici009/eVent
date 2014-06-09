@@ -102,18 +102,6 @@ public class EventDetails extends ActionBarActivity {
 		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
 		Log.i(LOG_TAG, temp.deadline.toString());		
 		events.eventsArray.add(temp.copy());
-		try
-		{
-			FileOutputStream fileOut = new FileOutputStream("/com.example.maps/");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(events);
-			out.close();
-			//fileOut.close();
-		}
-		catch(IOException i)
-		{
-			i.printStackTrace();
-		}
 		onBackPressed();
 	}
 	
