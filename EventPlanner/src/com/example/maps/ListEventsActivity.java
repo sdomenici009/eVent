@@ -105,6 +105,7 @@ public class ListEventsActivity extends ActionBarActivity{
 	
 	public void makeList()
 	{
+		events.bubbleSort();
 		for(int i = 0; i < events.eventsArray.size(); i++)
 			makeNewElement(events.eventsArray.get(i));
 	}
