@@ -2,7 +2,6 @@ package com.example.maps;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -55,6 +55,8 @@ public class MakeEventActivity extends FragmentActivity implements OnMapClickLis
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);		
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
+		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+		relativeLayout.setVisibility(View.GONE);
         try {
             // Loading map
             initilizeMap();
@@ -71,6 +73,8 @@ public class MakeEventActivity extends FragmentActivity implements OnMapClickLis
 	    	if (googleMap != null){
 		        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
 		    	locationManager.removeUpdates(this);
+				RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+				relativeLayout.setVisibility(View.VISIBLE);
 	    	}
 	    }
 
@@ -166,7 +170,7 @@ public class MakeEventActivity extends FragmentActivity implements OnMapClickLis
         temp = eventMarker.getInstance(this);
         googleMap.clear();
         for(int i = 0; i < events.eventsArray.size(); i++)
-    		googleMap.addMarker(new MarkerOptions().position(events.eventsArray.get(i).Loc).title(events.eventsArray.get(i).Title)).showInfoWindow();
+    		googleMap.addMarker(new MarkerOptions().position(events.eventsArray.get(i).Loc).title(events.eventsArray.get(i).Title));
     }	
     
     @Override
