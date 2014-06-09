@@ -5,31 +5,31 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/listButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="14dp"
-        android:text="@string/deleteTaskText" />
-
     <TextView
         android:id="@+id/listTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
         android:text="@string/listTitleText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/listButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/listTitle"
+        android:layout_marginRight="21dp"
+        android:text="@string/deleteTaskText" />
 
     <TextView
         android:id="@+id/listTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/listButton"
         android:layout_alignBottom="@+id/listButton"
-        android:layout_alignLeft="@+id/listText"
+        android:layout_alignParentLeft="true"
         android:text="@string/deadlineText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
