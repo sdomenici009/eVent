@@ -41,5 +41,18 @@ public class ArrayOfEvents {
 		}
 		this.eventsArray.add(newest);
 	}
+	
+	public void bubbleSort(){
+		for (int c = 0; c < ( this.eventsArray.size() - 1 ); c++) {
+			for (int d = 0; d < this.eventsArray.size() - c - 1; d++) {
+				if (this.eventsArray.get(d).deadline.getTimeInMillis() > this.eventsArray.get(d+1).deadline.getTimeInMillis()) 
+				{
+					eventMarker tempMarker = this.eventsArray.get(d);
+					this.eventsArray.set(d, this.eventsArray.get(d+1));
+					this.eventsArray.set(d+1,tempMarker);
+				}
+		    }
+  		} 
+	}
 
 }
