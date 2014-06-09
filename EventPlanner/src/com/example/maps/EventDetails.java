@@ -1,5 +1,6 @@
 package com.example.maps;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -108,6 +110,9 @@ public class EventDetails extends ActionBarActivity {
 		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
 		events.insertByDate(temp.copy());
 		
+		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+		
 		Gson gson = new Gson();
 		
 		SharedPreferences settings = getSharedPreferences(MainActivity.MYPREFS, 0);
@@ -118,6 +123,8 @@ public class EventDetails extends ActionBarActivity {
 	}
 	
 	public void cancel(View V){
+		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		onBackPressed();
 	}
 
