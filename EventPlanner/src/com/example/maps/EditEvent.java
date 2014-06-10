@@ -113,10 +113,8 @@ public class EditEvent extends ActionBarActivity {
 		EditText et2 = (EditText) findViewById(R.id.editText2);
 		temp.Description = et2.getText().toString();
 		DatePicker dp = (DatePicker) findViewById(R.id.datePicker1);
-		Log.i(LOG_TAG, Integer.toString(dp.getYear()));
 		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 		temp.deadline.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), tp.getCurrentHour(), tp.getCurrentMinute());
-		Log.i(LOG_TAG, temp.deadline.toString());	
 		events.eventsArray.set(index, temp);
 		
 		
@@ -126,6 +124,7 @@ public class EditEvent extends ActionBarActivity {
 		
 		Gson gson = new Gson();
 		
+		//overwrites the sharedpreferences with event changes
 		SharedPreferences settings = getSharedPreferences(MainActivity.MYPREFS, 0);
 		Editor editor = settings.edit();
 		editor.putString(MainActivity.PREF_STRING_1, gson.toJson(events, ArrayOfEvents.class));

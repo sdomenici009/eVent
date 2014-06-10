@@ -13,8 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 
-//import com.example.maps.DeadlineTrackerServiceTask.ResultCallback;
-
+//Service runs in background and notifies user when an event deadline is hit
 public class DeadlineTrackerService extends Service {
 
     private static final String LOG_TAG = "MyService";

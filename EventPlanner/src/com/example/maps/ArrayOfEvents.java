@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 
+//singleton class for sharing all events between activities
 public class ArrayOfEvents {
 
 	private static ArrayOfEvents instance = null;
@@ -42,6 +43,7 @@ public class ArrayOfEvents {
 		this.eventsArray.add(newest);
 	}
 	
+	//sorts events by deadline
 	public void bubbleSort(){
 		for (int c = 0; c < ( this.eventsArray.size() - 1 ); c++) {
 			for (int d = 0; d < this.eventsArray.size() - c - 1; d++) {

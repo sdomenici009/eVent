@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
 
-
+//singleton class for an event. All of these events will be stored in an ArrayOfEvents object
 public class eventMarker {
 
 	private static eventMarker instance = null;

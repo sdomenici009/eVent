@@ -45,10 +45,8 @@ public class MainActivity extends ActionBarActivity {
 		Gson gson = new Gson();
 		SharedPreferences settings = getSharedPreferences(MainActivity.MYPREFS, 0);
 		Editor editor = settings.edit();
-		if(settings.contains(PREF_STRING_1)){
+		if(settings.contains(PREF_STRING_1))
 			events.eventsArray = gson.fromJson(settings.getString(PREF_STRING_1, ""), ArrayOfEvents.class).eventsArray;
-			Log.i(LOG_TAG, settings.getString(PREF_STRING_1, ""));
-		}
 	}
 	
 	@Override

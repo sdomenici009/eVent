@@ -97,10 +97,8 @@ public class EventDetails extends ActionBarActivity {
 	
 	public void makeEvent(View V){
 		EditText et1 = (EditText) findViewById(R.id.editText1);
-		if(et1.getText().toString().compareTo("") == 0){
-			Log.i(LOG_TAG, "no title");
+		if(et1.getText().toString().compareTo("") == 0)
 			temp.Title = "No Title";
-		}
 		else
 			temp.Title = et1.getText().toString();
 		EditText et2 = (EditText) findViewById(R.id.editText2);

@@ -56,7 +56,7 @@ public class MakeEventActivity extends FragmentActivity implements OnMapClickLis
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
 		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-		relativeLayout.setVisibility(View.GONE);
+		relativeLayout.setVisibility(View.GONE); //don't display map until it is moved to our location
         try {
             // Loading map
             initilizeMap();
@@ -188,30 +188,6 @@ public class MakeEventActivity extends FragmentActivity implements OnMapClickLis
     	Intent intent = new Intent(this, EventDetails.class);
 		startActivity(intent);
     }
-    
-    /*
-    public void clickPlaceEvent(View v){
-		projection = googleMap.getProjection();
-		LatLng tempLoc = projection.fromScreenLocation(new Point((int) (screen_width / 2), (int) (screen_height/2)));
-		/*SharedPreferences settings = getSharedPreferences(MYPREFS, 0);
-		SharedPreferences.Editor editor = settings.edit();
-	    editor.putString(CreateEvent.PREF_LAT, Double.toString(tempLoc.latitude));
-	    editor.putString(CreateEvent.PREF_LONG, Double.toString(tempLoc.longitude));
-	    editor.commit();
-
-		Intent intent = new Intent(this, CreateEvent.class);
-		startActivity(intent);
-		temp = eventMarker.getInstance(this);
-		temp.Loc = tempLoc;
-		EditText tempText = (EditText)findViewById(R.id.editText1);
-		temp.Title = tempText.getText().toString();
-		/*.snippet("Kiel is cool")
-		.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-		tempText.setText("New Event Title");
-		
-		Intent intent = new Intent(this, EventDetails.class);
-		startActivity(intent);
-	}*/
     
 	public void onClickTitleEditText(View v)
 	{

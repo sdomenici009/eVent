@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-
+//Activity for displaying all tasks in a listView
 public class ListEventsActivity extends ActionBarActivity{
 	
 	eventMarker temp;
@@ -99,18 +99,12 @@ public class ListEventsActivity extends ActionBarActivity{
 	
 	public void makeNewElement(eventMarker marker)
 	{
-		Log.d("LOG_TAG", "New element being created");
 		ListElement el = new ListElement();
-		Log.d("LOG_TAG", "New element created");
 		el.thisEvent = marker;
-		Log.d("LOG_TAG", "Marker Assigned");
 		el.titleLabel = marker.Title;
-		Log.d("LOG_TAG", "Title Assigned");
 	    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		el.timeLabel = sdf.format(marker.deadline.getTime());
-		Log.d("LOG_TAG", "Marker Assigned");
 		aList.add(el);
-		Log.d("LOG_TAG", "The length of the list now is " + aList.size());
 		aa.notifyDataSetChanged();
 	}
 	
