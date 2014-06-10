@@ -1,6 +1,6 @@
 package com.example.maps;
 
-import com.google.gson.Gson;
+import java.text.SimpleDateFormat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 public class ViewTaskActivity extends ActionBarActivity {
 
@@ -42,8 +44,9 @@ public class ViewTaskActivity extends ActionBarActivity {
 		tv.setText(temp.Title);
 		tv = (TextView) findViewById(R.id.textView2);
 		tv.setText(temp.Description);
+	    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		tv = (TextView) findViewById(R.id.textView4);
-		tv.setText(temp.deadline.getTime().toString());
+		tv.setText(sdf.format(temp.deadline.getTime()));
 		
 	}
 	@Override

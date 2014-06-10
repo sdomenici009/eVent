@@ -31,29 +31,6 @@
             android:text="@string/description"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="124dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/deadline1"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date1"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
@@ -71,6 +48,29 @@
             android:layout_alignParentRight="true"
             android:text="@string/edit1"
             android:onClick="edit" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="48dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deadline1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
 
     </RelativeLayout>
 

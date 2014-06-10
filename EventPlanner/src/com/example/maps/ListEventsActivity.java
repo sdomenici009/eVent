@@ -1,11 +1,9 @@
 package com.example.maps;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -20,6 +18,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 
 public class ListEventsActivity extends ActionBarActivity{
@@ -106,7 +106,8 @@ public class ListEventsActivity extends ActionBarActivity{
 		Log.d("LOG_TAG", "Marker Assigned");
 		el.titleLabel = marker.Title;
 		Log.d("LOG_TAG", "Title Assigned");
-		el.timeLabel = marker.deadline.getTime().toString();
+	    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		el.timeLabel = sdf.format(marker.deadline.getTime());
 		Log.d("LOG_TAG", "Marker Assigned");
 		aList.add(el);
 		Log.d("LOG_TAG", "The length of the list now is " + aList.size());
